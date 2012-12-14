@@ -49,7 +49,10 @@ $.fn.S3Uploader = (options) ->
         to = $uploadForm.data('post')
         if to
           content[$uploadForm.data('as')] = content.url
-          $.post(to, content)
+          $.post(to, content,
+            (data)->
+              $uploadForm.trigger("s3_upload_file_complete", [data])
+          )
 
         data.context.remove() if data.context && settings.remove_completed_progress_bar # remove progress bar
 
